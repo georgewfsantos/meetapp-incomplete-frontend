@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
-import api from '~/services/api';
+import { toast } from 'react-toastify';
+
 import history from '~/services/history';
+
+import { getMeetupsRequest } from '~/store/modules/meetup/actions';
 
 import {
   Container,
@@ -14,25 +16,20 @@ import {
 } from './styles';
 
 export default function Dashboard() {
-  const [meetups, setMeetups] = useState([]);
+  const dispatch = useDispatch();
+  const meetups = useSelector(state => state.meetup.meetups);
 
   useEffect(() => {
     async function loadMeetups() {
-      const response = await api.get('/meetups');
-
-      const data = response.data.map(meetup => ({
-        ...meetup,
-        formattedDate: format(
-          parseISO(meetup.date),
-          "d 'de' MMMM', às' HH':'mm'h'",
-          { locale: pt }
-        ),
-      }));
-      setMeetups(data);
+      try {
+        dispatch(getMeetupsRequest());
+      } catch (err) {
+        toast.error('Não foi possível carregar a listagem de meetups');
+      }
     }
 
     loadMeetups();
-  }, []);
+  }, [dispatch]);
 
   function handleDetails(meetup) {
     history.push('/details', { meetup });

@@ -1,41 +1,39 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
 
 import { MdSave } from 'react-icons/md';
 
-import { toast } from 'react-toastify';
-import history from '~/services/history';
-
-import api from '~/services/api';
-
 import { Container } from './styles';
 import BannerInput from './BannerInput';
+import { newMeetupRequest } from '~/store/modules/meetup/actions';
+
+const schema = Yup.object().shape({
+  file_id: Yup.number(),
+  title: Yup.string().required('O campo título é obrigatório'),
+  description: Yup.string().required('O campo descrição é obrigatório'),
+  location: Yup.string().required('O campo localização é obrigatório'),
+  date: Yup.date().required('O campo data é obrigatório'),
+});
 
 export default function NewMeetup() {
-  async function handleSubmit(data) {
-    const meetup = {
-      ...data,
-    };
-
-    try {
-      await api.post('meetups', { meetup });
-      toast.success(`${meetup.tittle} cadastrado com sucesso.`);
-      history.push('/dashboard');
-    } catch (err) {
-      toast.error('Não foi possível cadastrar o meetup. Verifique os dados');
-    }
+  const dispatch = useDispatch();
+  function handleSubmit(data) {
+    dispatch(newMeetupRequest(data));
   }
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form schema={schema} onSubmit={handleSubmit}>
         <BannerInput name="file_id" />
         <Input name="title" placeholder="Title" />
         <Input name="description" placeholder="description" />
-        <Input type="datetime-local" name="data" placeholder="data" />
+        <Input type="datetime-local" name="date" placeholder="data" />
         <Input name="location" placeholder="localização" />
         <button type="submit">
-          <MdSave />
+          <MdSave size={20} color="#fff" />
+          Salvar meetup
         </button>
       </Form>
     </Container>
