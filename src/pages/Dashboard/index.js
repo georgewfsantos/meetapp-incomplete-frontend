@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
 import history from '~/services/history';
 
 import { getMeetupsRequest } from '~/store/modules/meetup/actions';
@@ -32,7 +35,7 @@ export default function Dashboard() {
   }, [dispatch]);
 
   function handleDetails(meetup) {
-    history.push('/details', { meetup });
+    history.push(`/details/${meetup.id}`, { meetup });
   }
 
   function handleNewMeetup() {
@@ -51,7 +54,11 @@ export default function Dashboard() {
           meetups.map(meetup => (
             <MeetupInfo key={meetup.id}>
               <strong>{meetup.title}</strong>
-              <span>{meetup.formattedDate}</span>
+              <span>
+                {format(parseISO(meetup.date), "d 'de' MMMM', às' HH':'mm", {
+                  locale: pt,
+                })}
+              </span>
               <button type="button" onClick={() => handleDetails(meetup)}>
                 <MdChevronRight size={20} color="#FFF" />
               </button>

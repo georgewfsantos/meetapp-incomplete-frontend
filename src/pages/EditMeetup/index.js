@@ -5,10 +5,12 @@ import * as Yup from 'yup';
 
 import { MdSave } from 'react-icons/md';
 
+import { parseISO } from 'date-fns';
+
 import { Container } from './styles';
-import BannerInput from './BannerInput';
-import DatePicker from './DatePicker';
-import { newMeetupRequest } from '~/store/modules/meetup/actions';
+import BannerInput from '~/pages/NewMeetup/BannerInput';
+import DatePicker from '~/pages/NewMeetup/DatePicker';
+import { editMeetupRequest } from '~/store/modules/meetup/actions';
 
 const schema = Yup.object().shape({
   file_id: Yup.number(),
@@ -18,15 +20,24 @@ const schema = Yup.object().shape({
   date: Yup.date().required('O campo data é obrigatório'),
 });
 
-export default function NewMeetup() {
+export default function EditMeetup(meetup) {
+  const meetUpInfo = {
+    ...meetup.location.state.meetup,
+  };
+
+  console.log(meetup);
+
+  meetUpInfo.date = parseISO(meetUpInfo.date);
+
   const dispatch = useDispatch();
   function handleSubmit(data) {
-    dispatch(newMeetupRequest(data));
+    console.log(data);
+    dispatch(editMeetupRequest(data));
   }
 
   return (
     <Container>
-      <Form schema={schema} onSubmit={handleSubmit}>
+      <Form initialData={meetUpInfo} schema={schema} onSubmit={handleSubmit}>
         <BannerInput name="file_id" />
         <Input name="title" placeholder="Title" />
         <Input name="description" placeholder="description" />

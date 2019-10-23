@@ -19,7 +19,7 @@ export function meetupFailure() {
 
 export function newMeetupRequest(data) {
   return {
-    type: '@meeetup/NEW_MEETUP_REQUEST',
+    type: '@meetup/NEW_MEETUP_REQUEST',
     payload: { data },
   };
 }
