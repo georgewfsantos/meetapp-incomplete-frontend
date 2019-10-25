@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -6,6 +6,10 @@ import * as Yup from 'yup';
 import { MdSave } from 'react-icons/md';
 
 import { parseISO } from 'date-fns';
+// import pt from 'date-fns/locale/pt';
+
+import { toast } from 'react-toastify';
+import api from '~/services/api';
 
 import { Container } from './styles';
 import BannerInput from '~/pages/NewMeetup/BannerInput';
@@ -20,24 +24,33 @@ const schema = Yup.object().shape({
   date: Yup.date().required('O campo data é obrigatório'),
 });
 
-export default function EditMeetup(meetup) {
-  const meetUpInfo = {
-    ...meetup.location.state.meetup,
-  };
-
-  console.log(meetup);
-
-  meetUpInfo.date = parseISO(meetUpInfo.date);
-
+export default function EditMeetup({ match }) {
   const dispatch = useDispatch();
+  const [meetup, setMeetup] = useState({});
+  const [file, setFile] = useState();
+
+  useEffect(() => {
+    async function loadMeetup() {
+      const response = await api.get(`/meetups/${match.params.id}/details`);
+
+      const meetupDetails = response.data;
+      console.log(meetupDetails);
+
+      meetupDetails.date = parseISO(meetupDetails.date);
+
+      setFile(meetupDetails.File);
+      setMeetup(meetupDetails);
+    }
+    loadMeetup(match.params.id);
+  }, [match.params.id]);
+
   function handleSubmit(data) {
-    console.log(data);
-    dispatch(editMeetupRequest(data));
+    dispatch(editMeetupRequest({ ...data, id: match.params.id }));
   }
 
   return (
     <Container>
-      <Form initialData={meetUpInfo} schema={schema} onSubmit={handleSubmit}>
+      <Form initialData={meetup} schema={schema} onSubmit={handleSubmit}>
         <BannerInput name="file_id" />
         <Input name="title" placeholder="Title" />
         <Input name="description" placeholder="description" />

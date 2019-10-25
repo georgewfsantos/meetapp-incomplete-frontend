@@ -1,5 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { isBefore, parseISO } from 'date-fns/esm';
+import { format, isBefore, parseISO } from 'date-fns';
+
+import pt from 'date-fns/locale/pt';
 
 import { toast } from 'react-toastify';
 
@@ -18,6 +20,13 @@ export function* getMeetups() {
     const response = yield call(api.get, 'meetups');
     const meetups = response.data.map(meetup => ({
       ...meetup,
+      formattedDate: format(
+        parseISO(meetup.date),
+        "d 'de' MMMM', às' HH:mm'h'",
+        {
+          locale: pt,
+        }
+      ),
       past: isBefore(parseISO(meetup.date), new Date()),
     }));
 
@@ -65,8 +74,8 @@ export function* editMeetup({ payload }) {
 
   try {
     const response = yield call(api.put, `meetups/${id}`, meetup);
-    toast.success(`${meetup.title} has been updated successfully`);
-    history.push(`/details/${id}`);
+    toast.success('The meetup has been updated successfully');
+    history.push(`meetups/${id}/details`, { meetup });
     yield put(editMeetupSuccess(response.data));
   } catch (err) {
     const { message } = err;
