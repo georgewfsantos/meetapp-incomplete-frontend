@@ -29,9 +29,9 @@ export default function NewMeetup() {
       <Form schema={schema} onSubmit={handleSubmit}>
         <BannerInput name="file_id" />
         <Input name="title" placeholder="Title" />
-        <Input name="description" placeholder="description" />
-        <DatePicker name="date" placeholder="data" />
-        <Input name="location" placeholder="localização" />
+        <Input name="description" placeholder="Descrição completa" multiline />
+        <DatePicker name="date" placeholder="Data" />
+        <Input name="location" placeholder="Localização" />
         <button type="submit">
           <MdSave size={20} color="#fff" />
           Salvar meetup

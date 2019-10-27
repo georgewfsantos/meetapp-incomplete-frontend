@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 600px;
+  width: 940px;
   margin: 50px auto;
 
   form {
@@ -23,6 +23,7 @@ export const Container = styled.div`
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.5);
+        align-text: start;
       }
     }
 
@@ -34,10 +35,6 @@ export const Container = styled.div`
       line-height: 24px;
       padding-top: 10px;
       resize: none;
-
-      &::placeholder {
-        align-items: start;
-      }
     }
 
     .react-datepicker__navigation.react-datepicker__navigation--previous,
@@ -56,7 +53,7 @@ export const Container = styled.div`
     }
 
     #img {
-      height: 200px;
+      height: 300px;
       font-family: 'Roboto';
       font-size: 14px;
       line-height: 24px;

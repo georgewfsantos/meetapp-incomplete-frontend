@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 940px;
   margin: 50px auto;
 
   form {
@@ -56,7 +56,7 @@ export const Container = styled.div`
     }
 
     #img {
-      height: 200px;
+      height: 300px;
       font-family: 'Roboto';
       font-size: 14px;
       line-height: 24px;

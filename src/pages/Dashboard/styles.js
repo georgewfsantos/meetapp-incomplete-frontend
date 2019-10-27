@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 940px;
   margin: 50px auto;
 
   display: flex;
@@ -18,7 +18,7 @@ export const DashHeader = styled.div`
   justify-content: space-between;
   padding: 18px;
   color: #fff;
-  font-size: 18px;
+  font-size: 32px;
   font-weight: 400;
   line-height: 24px;
 
@@ -27,11 +27,12 @@ export const DashHeader = styled.div`
     align-items: center;
     justify-content: center;
     width: 172px;
-    height: 35px;
+    height: 42px;
     border: 0;
     border-radius: 4px;
     background: #f94d6a;
     color: #fff;
+    font-weight: 600;
 
     svg {
       margin-right: 0.5em;
@@ -46,12 +47,12 @@ export const MeetupList = styled.div`
   padding: 20px;
 `;
 
-export const MeetupInfo = styled.li`
+export const MeetupInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 50px;
+  height: 62px;
   padding: 0 15px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -59,14 +60,19 @@ export const MeetupInfo = styled.li`
   font-weight: 400;
   margin: 0 0 15px;
 
-  strong {
+  #info-left {
+    width: 50%;
     color: #fff;
-    font-size: 15px;
     line-height: 24px;
+
+    strong {
+      font-size: 18px;
+    }
   }
 
-  span {
-    width: 100%;
+  #info-right {
+    display: flex;
+    width: 50%;
     height: 21px;
     color: rgba(255, 255, 255, 0.6);
     font-size: 13px;
@@ -74,26 +80,35 @@ export const MeetupInfo = styled.li`
     line-height: 24px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: 20em;
-  }
+    justify-content: flex-end;
 
-  button {
-    display: flex;
-    margin-left: 40px;
-    background: none;
-    border: 0;
-    align-content: center;
-    justify-content: center;
+    span {
+      margin-right: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      display: flex;
+      background: none;
+      border: 0;
+      align-content: center;
+      justify-content: center;
+      font-size: 24px;
+
+      svg {
+        font-weight: 800;
+        color: #fff;
+      }
+    }
   }
 `;
 
-export const EmptyList = styled.div`
+export const Empty = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50px;
+  height: 200px;
   padding: 0 15px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -103,5 +118,7 @@ export const EmptyList = styled.div`
     font-size: 18px;
     font-weight: 400;
     margin: 0 0 15px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
   }
 `;

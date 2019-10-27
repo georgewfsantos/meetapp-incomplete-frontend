@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
   background: rgba(0, 0, 0, 0.3);
@@ -20,7 +20,20 @@ export const Content = styled.div`
 
     img {
       margin-right: 20px;
+      padding-right: 20px;
+      border-right: 1px solid #999;
     }
+
+    a {
+      font-weight: bold;
+      color:#999;
+
+      &:hover {
+       color: ${lighten(0.08, '#999')};
+     }
+    }
+
+
   }
 
   aside {
@@ -35,6 +48,7 @@ export const Content = styled.div`
       background: #f94d6a;
       margin-left: 20px;
       color: #fff;
+      font-weight:600;
 
       &:hover {
         background: ${darken(0.05, '#f94d6a')};
@@ -63,6 +77,10 @@ export const Profile = styled.div`
       margin-top: 2px;
       font-size: 12px;
       color: #999;
+
+      &:hover {
+        color: ${lighten(0.08, '#999')};
+      }
     }
   }
 `;

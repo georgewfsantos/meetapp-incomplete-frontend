@@ -13,7 +13,7 @@ export const Container = styled.div`
     }
 
     img {
-      height: 200px;
+      height: 300px;
       width: 100%;
       border-radius: 4px;
       background: #eee;

@@ -7,13 +7,7 @@ import history from '~/services/history';
 
 import { getMeetupsRequest } from '~/store/modules/meetup/actions';
 
-import {
-  Container,
-  DashHeader,
-  MeetupInfo,
-  MeetupList,
-  EmptyList,
-} from './styles';
+import { Container, DashHeader, MeetupInfo, MeetupList, Empty } from './styles';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -50,15 +44,24 @@ export default function Dashboard() {
         {meetups.length > 0 ? (
           meetups.map(meetup => (
             <MeetupInfo key={meetup.id}>
-              <strong>{meetup.title}</strong>
-              <span>{meetup.formattedDate}</span>
-              <button type="button" onClick={() => handleDetails(meetup)}>
-                <MdChevronRight size={20} color="#FFF" />
-              </button>
+              <div id="info-left">
+                <strong>{meetup.title}</strong>
+              </div>
+              <div id="info-right">
+                <span>{meetup.formattedDate}</span>
+                <button type="button" onClick={() => handleDetails(meetup)}>
+                  <MdChevronRight size={20} color="#FFF" />
+                </button>
+              </div>
             </MeetupInfo>
           ))
         ) : (
-          <EmptyList> Nope</EmptyList>
+          <Empty>
+            <strong>
+              Você não possui nenhum meetup. Cadastre clicando no botão Novo
+              Meetup
+            </strong>
+          </Empty>
         )}
       </MeetupList>
     </Container>

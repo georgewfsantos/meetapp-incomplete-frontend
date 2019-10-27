@@ -1,16 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@rocketseat/unform';
+import PropTypes from 'prop-types';
 import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function BannerInput() {
+export default function BannerInput({ fileObj }) {
   const { defaultValue, registerField } = useField('File');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
   const ref = useRef();
+  useEffect(() => {
+    if (fileObj) {
+      setFile(fileObj.id);
+      setPreview(fileObj.url);
+    }
+  }, [fileObj]);
 
   useEffect(() => {
     if (ref.current) {
@@ -49,6 +56,7 @@ export default function BannerInput() {
         <input
           type="file"
           id="File"
+          name="file_id"
           accept="image"
           onChange={handleChange}
           data-file={file}
@@ -58,3 +66,13 @@ export default function BannerInput() {
     </Container>
   );
 }
+
+BannerInput.defaultProps = {
+  fileObj: {},
+};
+BannerInput.propTypes = {
+  fileObj: PropTypes.shape({
+    url: PropTypes.string,
+    id: PropTypes.number,
+  }),
+};

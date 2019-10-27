@@ -13,6 +13,7 @@ import {
   meetupFailure,
   newMeetupSuccess,
   editMeetupSuccess,
+  cancelMeetupSuccess,
 } from './actions';
 
 export function* getMeetups() {
@@ -84,8 +85,23 @@ export function* editMeetup({ payload }) {
   }
 }
 
+export function* cancelMeetup({ payload }) {
+  const { id } = payload;
+
+  try {
+    const response = yield call(api.delete, `meetups/${id}`);
+    toast.success(' The meetup was cancelled successfully.');
+    yield put(cancelMeetupSuccess(response.data));
+    history.push('/dashboard');
+  } catch (err) {
+    toast.error('The meetup could not be cancelled.');
+    yield put(meetupFailure());
+  }
+}
+
 export default all([
   takeLatest('@meetup/GET_MEETUPS_REQUEST', getMeetups),
   takeLatest('@meetup/NEW_MEETUP_REQUEST', createNewMeetup),
   takeLatest('@meetup/EDIT_MEETUP_REQUEST', editMeetup),
+  takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup),
 ]);

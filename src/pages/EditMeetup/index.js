@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
+import Proptypes from 'prop-types';
+
 import { MdSave } from 'react-icons/md';
 
 import { parseISO } from 'date-fns';
@@ -34,7 +36,6 @@ export default function EditMeetup({ match }) {
       const response = await api.get(`/meetups/${match.params.id}/details`);
 
       const meetupDetails = response.data;
-      console.log(meetupDetails);
 
       meetupDetails.date = parseISO(meetupDetails.date);
 
@@ -51,9 +52,9 @@ export default function EditMeetup({ match }) {
   return (
     <Container>
       <Form initialData={meetup} schema={schema} onSubmit={handleSubmit}>
-        <BannerInput name="file_id" />
+        <BannerInput fileObj={file} />
         <Input name="title" placeholder="Title" />
-        <Input name="description" placeholder="description" />
+        <Input name="description" placeholder="description" multiline />
         <DatePicker name="date" placeholder="data" />
         <Input name="location" placeholder="localização" />
         <button type="submit">
@@ -64,3 +65,11 @@ export default function EditMeetup({ match }) {
     </Container>
   );
 }
+
+EditMeetup.propTypes = {
+  match: Proptypes.shape({
+    params: Proptypes.shape({
+      id: Proptypes.node,
+    }).isRequired,
+  }).isRequired,
+};

@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 600px;
+  width: 940px;
   margin: 50px auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  #info {
+    padding: 15px;
+  }
 `;
 
 export const Header = styled.div`
@@ -15,6 +19,9 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 24px;
 
   #buttons {
     display: flex;
@@ -23,9 +30,6 @@ export const Header = styled.div`
 
   strong {
     color: #ffffff;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 43px;
   }
 
   button {
@@ -73,6 +77,10 @@ export const Content = styled.div`
   width: 100%;
   margin-top: 15px;
 
+  #description {
+    margin-bottom: 10px;
+  }
+
   p {
     color: #fff;
     font-size: 18px;
@@ -86,7 +94,7 @@ export const InfoFooter = styled.div`
   align-items: center;
   justify-content: start;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 25px;
 
   span {
     display: flex;
